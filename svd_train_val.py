@@ -16,7 +16,7 @@ USER_NUM = 6040
 ITEM_NUM = 3952
 DIM = 15
 EPOCH_MAX = 100
-DEVICE = "/cpu:0"
+DEVICE = "/cpu:0"  #"/cpu:0"
 
 
 def clip(x):
@@ -28,7 +28,7 @@ def make_scalar_summary(name, val):
 
 
 def get_data():
-    df = dataio.read_process("/tmp/movielens/ml-1m/ratings.dat", sep="::")
+    df = dataio.read_process("tmp/movielens/ml-1m/ratings.dat", sep="::")
     rows = len(df)
     df = df.iloc[np.random.permutation(rows)].reset_index(drop=True)
     split_index = int(rows * 0.9)
@@ -62,7 +62,7 @@ def svd(train, test):
     init_op = tf.global_variables_initializer()
     with tf.Session() as sess:
         sess.run(init_op)
-        summary_writer = tf.summary.FileWriter(logdir="/tmp/svd/log", graph=sess.graph)
+        summary_writer = tf.summary.FileWriter(logdir="tmp/svd/log", graph=sess.graph)
         print("{} {} {} {}".format("epoch", "train_error", "val_error", "elapsed_time"))
         errors = deque(maxlen=samples_per_batch)
         start = time.time()

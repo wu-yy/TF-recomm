@@ -3,8 +3,10 @@ import numpy as np
 import pandas as pd
 
 
+
 def read_process(filname, sep="\t"):
     col_names = ["user", "item", "rate", "st"]
+    #使用pandas 读取数据
     df = pd.read_csv(filname, sep=sep, header=None, names=col_names, engine='python')
     df["user"] -= 1
     df["item"] -= 1
@@ -22,9 +24,8 @@ class ShuffleIterator(object):
         self.inputs = inputs
         self.batch_size = batch_size
         self.num_cols = len(self.inputs)
-        self.len = len(self.inputs[0])
+        self.len = len(self.inputs[0]) #数据的长度
         self.inputs = np.transpose(np.vstack([np.array(self.inputs[i]) for i in range(self.num_cols)]))
-
     def __len__(self):
         return self.len
 
