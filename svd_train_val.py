@@ -60,6 +60,7 @@ def svd(train, test):
     _, train_op = ops.optimization(infer, regularizer, rate_batch, learning_rate=0.001, reg=0.05, device=DEVICE)
 
     init_op = tf.global_variables_initializer()
+    saver = tf.train.Saver()
     with tf.Session() as sess:
         sess.run(init_op)
         summary_writer = tf.summary.FileWriter(logdir="tmp/svd/log", graph=sess.graph)
@@ -90,6 +91,7 @@ def svd(train, test):
                 summary_writer.add_summary(train_err_summary, i)
                 summary_writer.add_summary(test_err_summary, i)
                 start = end
+        saver.save(sess, "tmp/svd/model/train.ckpt")
 
 
 if __name__ == '__main__':
